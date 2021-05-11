@@ -39,7 +39,9 @@ if __name__ == "__main__":
                     default=0.0001)
     parser.add_argument('--batch-size', type=int, help="Batch size",
                     default=1)
-    parser.add_argument('--patch-size', type=int, help="Batch size",
+    parser.add_argument('--patch-size', type=int, help="Patch size",
+                    default=150)
+    parser.add_argument('--epochs', type=int, help="Epochs",
                     default=150)
 
     args = parser.parse_args()
@@ -58,7 +60,7 @@ if __name__ == "__main__":
     model = get_simple_classifier()
     model.summary()
 
-    model.compile(optimizer=RMSprop(lr=0.001), loss='sparse_categorical_crossentropy',
+    model.compile(optimizer=RMSprop(lr=args['learning_rate']), loss='sparse_categorical_crossentropy',
                   metrics=['acc'])
-    history = model.fit(tgen, epochs=15)
+    history = model.fit(tgen, epochs=args['epochs'])
     print(history)
